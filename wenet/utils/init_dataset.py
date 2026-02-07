@@ -25,6 +25,8 @@ def init_dataset(dataset_type,
     if split != 'train':
         cv_conf = copy.deepcopy(conf)
         cv_conf['cycle'] = 1
+        cv_conf['normalize_power'] = False
+        cv_conf['apply_random_gain'] = False
         cv_conf['speed_perturb'] = False
         cv_conf['spec_aug'] = False
         cv_conf['spec_sub'] = False
