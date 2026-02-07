@@ -20,6 +20,6 @@ torchaudio>=2.1.2
 tqdm
 deepspeed>=0.14.0
 librosa
-openai-whisper==20231117
+openai-whisper # Do not fix version, allow for newer PyTorch versions.
 pre-commit==3.5.0
 langid
