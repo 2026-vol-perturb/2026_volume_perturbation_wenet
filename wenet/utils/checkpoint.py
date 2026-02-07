@@ -28,6 +28,10 @@ def load_checkpoint(model: torch.nn.Module, path: str) -> dict:
     logging.info('[Rank {}] Checkpoint: loading from checkpoint {}'.format(
         rank, path))
     checkpoint = torch.load(path, map_location='cpu', mmap=True)
+
+    # Drop the positional encoding stored in the model so that a new longer one is generated.
+    checkpoint.pop('encoder.embed.pos_enc.pe', None)
+
     missing_keys, unexpected_keys = model.load_state_dict(checkpoint,
                                                           strict=False)
     if rank == 0:

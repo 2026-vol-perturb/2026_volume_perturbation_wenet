@@ -208,7 +208,7 @@ def main():
 
     test_conf = copy.deepcopy(configs['dataset_conf'])
 
-    test_conf['filter_conf']['max_length'] = 102400
+    test_conf['filter_conf']['max_length'] = 10240000
     test_conf['filter_conf']['min_length'] = 0
     test_conf['filter_conf']['token_max_length'] = 102400
     test_conf['filter_conf']['token_min_length'] = 0
