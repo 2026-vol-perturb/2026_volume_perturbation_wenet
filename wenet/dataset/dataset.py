@@ -16,7 +16,7 @@
 from functools import partial
 import sys
 from typing import Optional
-from wenet.dataset import processor
+from wenet.dataset import processor, processor_ext
 from wenet.dataset.datapipes import (WenetRawDatasetSource,
                                      WenetTarShardDatasetSource)
 from wenet.text.base_tokenizer import BaseTokenizer
@@ -84,6 +84,17 @@ def Dataset(data_type,
 
     resample_conf = conf.get('resample_conf', {})
     dataset = dataset.map(partial(processor.resample, **resample_conf))
+
+    # Gain is deliberately applied during the test phase.
+    normalize_power = conf.get('normalize_power', False)
+    if normalize_power:
+        dataset = dataset.map(processor_ext.normalize_power)
+
+    # Gain is deliberately applied during the test phase.
+    apply_gain = conf.get('apply_gain', False)
+    if apply_gain:
+        apply_gain_conf = conf.get('apply_gain_conf', {})
+        dataset = dataset.map(partial(processor_ext.apply_gain, **apply_gain_conf))
 
     speed_perturb = conf.get('speed_perturb', False)
     if speed_perturb:
